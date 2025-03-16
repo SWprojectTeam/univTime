@@ -14,14 +14,14 @@ public class comments {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "postId")
-    private Post post;
+    private post post;
     @Column
     private String name;
     @Column
     private String body;
 
     @Builder
-    public Comments(Post post, String name, String body) {
+    public comments(post post, String name, String body) {
         this.post = post;
         this.name = name;
         this.body = body;
