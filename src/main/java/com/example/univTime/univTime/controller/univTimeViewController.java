@@ -1,6 +1,6 @@
 package com.example.univTime.univTime.controller;
 
-import com.example.univTime.univTime.domain.Post;
+import com.example.univTime.univTime.domain.post;
 import com.example.univTime.univTime.dto.commentListViewResponse;
 import com.example.univTime.univTime.dto.postListViewResponse;
 import com.example.univTime.univTime.dto.postViewResponse;
@@ -34,7 +34,7 @@ public class univTimeViewController {
 
     @GetMapping("/posts/{id}")
     public String getPost(@PathVariable Long id, Model model) {
-        Post post = postService.findById(id);
+        post post = postService.findById(id);
         List<commentListViewResponse> comments = commentService.get(id)
                 .stream()
                 .map(commentListViewResponse::new)
@@ -46,7 +46,7 @@ public class univTimeViewController {
 
     @GetMapping("/edit")
     public String editPost(@RequestParam Long id, Model model) {
-        Post post = postService.findById(id);
+        post post = postService.findById(id);
         model.addAttribute("post", new postViewResponse(post));
         return "edit";
     }
