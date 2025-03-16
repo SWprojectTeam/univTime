@@ -1,6 +1,6 @@
 package com.example.univTime.univTime.controller;
 
-import com.example.univTime.univTime.domain.Post;
+import com.example.univTime.univTime.domain.post;
 import com.example.univTime.univTime.dto.addPostRequest;
 import com.example.univTime.univTime.dto.postResponse;
 import com.example.univTime.univTime.dto.updatePost;
@@ -18,22 +18,22 @@ public class univTimeApiController {
     private PostService postService;
 
     @GetMapping("/api/posts")
-    public ResponseEntity<List<Post>> getArticle() {
-        List<Post> savedPost = postService.getAllPosts();
+    public ResponseEntity<List<post>> getArticle() {
+        List<post> savedPost = postService.getAllPosts();
         return ResponseEntity.status(HttpStatus.OK)
                 .body(savedPost);
     }
 
     @PostMapping("/api/posts")
-    public ResponseEntity<Post> addArticle(@RequestBody addPostRequest request) {
-        Post savedPost = postService.save(request);
+    public ResponseEntity<post> addArticle(@RequestBody addPostRequest request) {
+        post savedPost = postService.save(request);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(savedPost);
     }
 
     @GetMapping("/api/posts/{id}")
     public ResponseEntity<postResponse> findById(@PathVariable Long id) {
-        Post findPost = postService.findById(id);
+        post findPost = postService.findById(id);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new postResponse(findPost));
     }
@@ -45,9 +45,9 @@ public class univTimeApiController {
     }
 
     @PutMapping("/api/posts/{id}")
-    public ResponseEntity<Post> updateArticle(@PathVariable Long id,
+    public ResponseEntity<post> updateArticle(@PathVariable Long id,
                                               @RequestBody updatePost updatePost) {
-        Post post = postService.update(id, updatePost);
+        post post = postService.update(id, updatePost);
         return ResponseEntity.status(HttpStatus.OK).body(post);
     }
 }
