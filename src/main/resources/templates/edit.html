@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www/thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>univTime</title>
+</head>
+<body>
+<div>
+  <article>
+      <input type="hidden" id="post-id" th:value="${post.id}">
+      <input type="text" id="title" th:value="${post.title}"><br>
+      <textarea id="content" th:text="${post.content}"></textarea>
+      <button type="button" id="edit-button">수정하기</button>
+  </article>
+</div>
+<script src="/js/post.js"></script>
+</body>
+</html>

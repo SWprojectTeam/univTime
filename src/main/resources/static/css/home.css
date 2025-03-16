@@ -1,0 +1,325 @@
+  <style>
+    /* 기본 스타일 */
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: 220px 1fr 300px;
+      grid-template-areas:
+        "header header header"
+        "sidebar main right";
+      grid-gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+    /* 헤더 영역 */
+    .header {
+      grid-area: header;
+      padding: 15px 20px;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      background-color: #fff;
+    }
+    .header .logo {
+      font-size: 28px;
+      font-weight: 700;
+      color: #2c3e50;
+    }
+    /* 사이드바 */
+    .sidebar {
+      grid-area: sidebar;
+      padding: 20px;
+      background-color: #fafafa;
+      border-right: 1px solid #e0e0e0;
+      border-radius: 8px;
+    }
+    /* 로그인/회원가입 영역 */
+    #userArea {
+      margin-bottom: 25px;
+    }
+    #userArea form {
+      margin-bottom: 10px;
+    }
+    #userArea input {
+      width: 100%;
+      margin-bottom: 8px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    #userArea button {
+      width: 100%;
+      padding: 8px;
+      background-color: #2c3e50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    #userArea button:hover {
+      background-color: #34495e;
+    }
+    #userArea .account-actions a {
+      text-decoration: none;
+      color: #2c3e50;
+      font-size: 14px;
+      margin-right: 5px;
+      cursor: pointer;
+    }
+    /* 게시판 목록 */
+    .board-list {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0 0;
+    }
+    .board-list li {
+      margin-bottom: 12px;
+      padding: 10px;
+      background-color: #e8f0fe;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .board-list li:hover {
+      background-color: #d0e1fd;
+    }
+    /* 메인 영역 */
+    .main {
+      grid-area: main;
+      padding: 20px;
+    }
+    .main-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .main-header h2 {
+      margin: 0;
+      font-size: 24px;
+      color: #2c3e50;
+    }
+    .main-header button {
+      padding: 8px 16px;
+      background-color: #2c3e50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .main-header button:hover {
+      background-color: #34495e;
+    }
+    /* 글 작성 폼 (신규 작성 및 수정용) */
+    .post-form {
+      margin-bottom: 30px;
+      padding: 20px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      background-color: #fafafa;
+    }
+    .post-form input[type="text"],
+    .post-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .post-form button {
+      padding: 10px 20px;
+      background-color: #2c3e50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .post-form button:hover {
+      background-color: #34495e;
+    }
+    /* 테이블 스타일 for 게시글 목록 */
+    #postTableView table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    #postTableView th, #postTableView td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+    #postTableView th {
+      background-color: #f0f0f0;
+    }
+    #postTableView tr:hover {
+      background-color: #f9f9f9;
+      cursor: pointer;
+    }
+    /* 상세보기 영역 */
+    #postDetailView {
+      display: none;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 20px;
+      background-color: #fff;
+    }
+    #postDetailView h3 {
+      margin-top: 0;
+      color: #2c3e50;
+    }
+    #postDetailView .author {
+      font-size: 12px;
+      color: #777;
+      margin-bottom: 10px;
+    }
+    #postDetailView .content {
+      margin-bottom: 20px;
+      white-space: pre-wrap;
+    }
+    #postDetailView .post-actions {
+      text-align: right;
+      margin-bottom: 20px;
+    }
+    #postDetailView .post-actions button {
+      margin-left: 8px;
+      padding: 4px 8px;
+      border: none;
+      background-color: #2c3e50;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    #postDetailView .post-actions button:hover {
+      background-color: #34495e;
+    }
+    /* 추천/비추천 영역 */
+    .vote-section {
+      margin-bottom: 20px;
+    }
+    .vote-section button {
+      margin-left: 10px;
+      padding: 4px 8px;
+      border: none;
+      background-color: #2c3e50;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .vote-section button:hover {
+      background-color: #34495e;
+    }
+    /* 댓글 영역 (상세보기 내) */
+    #postDetailView .comment-section {
+      margin-top: 20px;
+      padding-top: 10px;
+      border-top: 1px dashed #ccc;
+    }
+    #postDetailView .comment {
+      margin-bottom: 10px;
+      padding: 8px;
+      background-color: #f0f0f0;
+      border-radius: 4px;
+      font-size: 14px;
+      position: relative;
+    }
+    #postDetailView .comment .comment-delete {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: transparent;
+      border: none;
+      color: #a00;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    #postDetailView .comment-form {
+      display: flex;
+      margin-top: 10px;
+    }
+    #postDetailView .comment-form input[type="text"] {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px 0 0 4px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+    #postDetailView .comment-form button {
+      padding: 8px 16px;
+      border: none;
+      background-color: #2c3e50;
+      color: #fff;
+      font-size: 14px;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    #postDetailView .comment-form button:hover {
+      background-color: #34495e;
+    }
+    /* 우측 영역: 인기 게시물 */
+    .right {
+      grid-area: right;
+      padding: 20px;
+      background-color: #fafafa;
+      border-left: 1px solid #e0e0e0;
+      border-radius: 8px;
+    }
+    .right h3 {
+      margin-top: 0;
+      font-size: 22px;
+      color: #2c3e50;
+    }
+    .right ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .right ul li {
+      margin-bottom: 12px;
+      padding: 10px;
+      background-color: #ffe0b2;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .right ul li:hover {
+      background-color: #ffd699;
+    }
+    /* 반응형 디자인 */
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "header"
+          "sidebar"
+          "main"
+          "right";
+      }
+      .sidebar, .right {
+        border: none;
+        border-radius: 0;
+      }
+      .sidebar {
+        border-bottom: 1px solid #e0e0e0;
+      }
+      .right {
+        border-top: 1px solid #e0e0e0;
+      }
+    }
+  </style>
