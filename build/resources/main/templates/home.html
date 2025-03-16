@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>커뮤니티 플랫폼 - 추천/비추천 기능 추가 예제</title>
+  <!-- Google Fonts 적용 -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <!-- 헤더 영역 -->
+    <div class="header">
+      <div class="logo">커뮤니티 로고</div>
+    </div>
+    
+    <!-- 사이드바: 로그인/회원가입 및 게시판 목록 -->
+    <div class="sidebar">
+      <div id="userArea">
+        <!-- 로그인/회원가입 UI가 이곳에 표시됩니다. -->
+      </div>
+      <ul class="board-list">
+        <li data-board="자유게시판">자유게시판</li>
+        <li data-board="공지사항">공지사항</li>
+        <li data-board="Q&A">Q&amp;A</li>
+        <li data-board="정보공유">정보공유</li>
+      </ul>
+    </div>
+    
+    <!-- 메인 영역 -->
+    <div class="main">
+      <div class="main-header">
+        <h2 id="boardTitle">자유게시판</h2>
+        <button id="writeBtn">글쓰기</button>
+      </div>
+      <!-- 검색 영역 (옵션) -->
+      <div class="search-container" style="margin-bottom:20px;">
+        <input type="text" placeholder="게시글 검색">
+        <button type="button">검색</button>
+      </div>
+      <div id="postListView">
+        <div th:each="post : ${posts}">
+          <a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}"></a>
+          <p th:text="${#temporals.format(post.created_at, 'yyyy-MM-dd')}"></p>
+          <hr>
+        </div>
+      </div>
+    </div>
+  </div>
+      
+      <!-- 게시글 상세보기 영역 (초기엔 숨김) -->
+      <div id="postDetailView"></div>
+    </div>
+    
+    <!-- 우측 영역: 인기 게시물 -->
+    <div class="right">
+      <h3>인기 게시물</h3>
+      <ul>
+        <li>인기 게시물 1</li>
+        <li>인기 게시물 2</li>
+        <li>인기 게시물 3</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

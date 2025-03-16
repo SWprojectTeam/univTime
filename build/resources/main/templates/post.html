@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>univTime</title>
+</head>
+<body>
+<div>
+    <article>
+        <input type="hidden" id="post-id" th:value="${post.id}">
+        <h2 th:text="|제목: ${post.title}"></h2>
+        <span th:text="${#temporals.format(post.created_at)}"></span>
+        <p th:text="|내용 : ${post.content}|"></p>
+        <button type="button" id="edit-button"
+                th:onclick="|location.href='@{/edit?id={postId}(postId=${post.id})}'|">
+            수정하기
+        </button>
+        <button type="button" id="delete-button">삭제하기</button>
+    </article>
+
+    <!-- 댓글 목록 -->
+    <section>
+        <h3>댓글</h3>
+        <ul>
+            <li th:each="comment : ${comments}">
+                <strong th:text="${comment.nickname}"></strong> :
+                <span th:text="${comment.body}"></span>
+            </li>
+        </ul>
+    </section>
+</div>
+<script src="/js/post.js"></script>
+</body>
+</html>
