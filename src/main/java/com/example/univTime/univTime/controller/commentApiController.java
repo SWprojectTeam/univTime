@@ -1,7 +1,6 @@
 package com.example.univTime.univTime.controller;
 
-import com.example.univTime.univTime.domain.Comments;
-import com.example.univTime.univTime.domain.Post;
+import com.example.univTime.univTime.domain.comments;
 import com.example.univTime.univTime.dto.addCommentRequest;
 import com.example.univTime.univTime.dto.commentResponse;
 import com.example.univTime.univTime.dto.updateComment;
@@ -27,17 +26,17 @@ public class commentApiController {
     }
 
     @PostMapping("/api/posts/{id}/comments")
-    public ResponseEntity<Comments> post(@PathVariable Long id, @RequestBody addCommentRequest request) {
-        Comments comments = commentService.addComment(id, request);
+    public ResponseEntity<comments> post(@PathVariable Long id, @RequestBody addCommentRequest request) {
+        comments comments = commentService.addComment(id, request);
         return comments != null ?
                 ResponseEntity.status(HttpStatus.CREATED).body(comments):
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     @PutMapping("/api/posts/{id}/comments/{commentsId}")
-    public ResponseEntity<Comments> edit(@PathVariable Long commentsId,
+    public ResponseEntity<comments> edit(@PathVariable Long commentsId,
                                          @RequestBody updateComment comment) {
-        Comments comments = commentService.edit(commentsId, comment);
+        comments comments = commentService.edit(commentsId, comment);
         return ResponseEntity.status(HttpStatus.OK).body(comments);
     }
 
