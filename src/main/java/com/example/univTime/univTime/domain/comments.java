@@ -1,0 +1,33 @@
+package com.example.univTime.univTime.domain;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class comments {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @ManyToOne
+    @JoinColumn(name = "postId")
+    private Post post;
+    @Column
+    private String name;
+    @Column
+    private String body;
+
+    @Builder
+    public Comments(Post post, String name, String body) {
+        this.post = post;
+        this.name = name;
+        this.body = body;
+    }
+
+    public void update(String body) {
+        this.body = body;
+    }
+}
