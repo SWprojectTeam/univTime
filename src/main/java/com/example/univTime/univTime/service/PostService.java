@@ -42,4 +42,13 @@ public class PostService {
         post.update(updatePost.getTitle(), updatePost.getContent());
         return post;
     }
+
+    public PostService(PostRepository postRepository) {
+        this.postRepository = postRepository;
+    }
+
+    // 특정 단어를 포함하는 게시글 필터링
+    public List<post> searchPostsByKeyword(String keyword) {
+        return postRepository.findByTitleContaining(keyword);
+    }
 }
