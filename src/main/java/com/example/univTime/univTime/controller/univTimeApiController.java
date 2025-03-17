@@ -50,4 +50,10 @@ public class univTimeApiController {
         post post = postService.update(id, updatePost);
         return ResponseEntity.status(HttpStatus.OK).body(post);
     }
+
+        // 특정 단어를 포함하는 게시글 검색 API
+    @GetMapping("/posts/search")
+    public List<post> searchPosts(@RequestParam String keyword) {
+        return postService.searchPostsByKeyword(keyword);
+    }
 }
