@@ -3,15 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>univTime</title>
+    <style>
+        /* 제목 입력란 스타일 */
+        #title {
+            width: 100%;
+            height: 50px;
+            font-size: 18px;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        /* 본문 입력란 스타일 */
+        #content {
+            width: 100%;
+            height: 350px;
+            font-size: 16px;
+            padding: 15px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            outline: none;
+            resize: vertical; /* 사용자가 세로로 조절 가능 */
+        }
+
+        /* 버튼 스타일 */
+        #edit-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #edit-button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
 <div>
-  <article>
-      <input type="hidden" id="post-id" th:value="${post.id}">
-      <input type="text" id="title" th:value="${post.title}"><br>
-      <textarea id="content" th:text="${post.content}"></textarea>
-      <button type="button" id="edit-button">수정하기</button>
-  </article>
+    <article>
+        <input type="hidden" id="post-id" th:value="${post.id}">
+        <input type="text" id="title" th:value="${post.title}" placeholder="제목을 입력하세요"><br>
+        <textarea id="content" placeholder="내용을 입력하세요" th:text="${post.content}"></textarea><br>
+        <button type="button" id="edit-button">수정하기</button>
+    </article>
 </div>
 <script src="/js/post.js"></script>
 </body>
