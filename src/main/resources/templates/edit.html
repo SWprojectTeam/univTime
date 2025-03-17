@@ -1,56 +1,80 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www/thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>univTime</title>
     <style>
+        /* 전체 폼 컨테이너 스타일 (가운데 정렬) */
+        #form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
         /* 제목 입력란 스타일 */
         #title {
-            width: 100%;
-            height: 50px;
-            font-size: 18px;
-            padding: 10px;
+            width: 650px; /* 너비 줄임 */
+            height: 35px; /* 높이 줄임 */
+            font-size: 16px;
+            padding: 8px;
             border: 2px solid #ccc;
-            border-radius: 10px;
+            border-radius: 8px;
             outline: none;
+            text-align: center;
+        }
+
+        /* 제목 입력란과 버튼을 한 줄에 배치 */
+        .title-container {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* 제목과 버튼 사이 간격 */
         }
 
         /* 본문 입력란 스타일 */
         #content {
-            width: 100%;
-            height: 350px;
+            width: 650px; /* 너비 줄임 */
+            height: 400px; /* 높이 줄임 */
             font-size: 16px;
             padding: 15px;
             border: 2px solid #ccc;
-            border-radius: 10px;
+            border-radius: 8px;
             outline: none;
-            resize: vertical; /* 사용자가 세로로 조절 가능 */
+            resize: vertical;
         }
 
-        /* 버튼 스타일 */
-        #edit-button {
-            margin-top: 10px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
+        /* 등록 버튼 스타일 */
+        #submit-button {
+            width: 75px;
+            height: 35px;
+            font-size: 14px;
+            background-color: #008CBA;
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
         }
 
-        #edit-button:hover {
-            background-color: #45a049;
+        #submit-button:hover {
+            background-color: #007BB5;
         }
     </style>
 </head>
 <body>
-<div>
+<div id="form-container">
     <article>
         <input type="hidden" id="post-id" th:value="${post.id}">
-        <input type="text" id="title" th:value="${post.title}" placeholder="제목을 입력하세요"><br>
+
+        <!-- 제목 입력란과 등록 버튼을 한 줄에 배치 -->
+        <div class="title-container">
+            <input type="text" id="title" th:value="${post.title}" placeholder="제목을 입력하세요">
+            <button type="button" id="submit-button">등록</button>
+        </div>
+
+        <br>
+
         <textarea id="content" placeholder="내용을 입력하세요" th:text="${post.content}"></textarea><br>
-        <button type="button" id="edit-button">수정하기</button>
     </article>
 </div>
 <script src="/js/post.js"></script>
