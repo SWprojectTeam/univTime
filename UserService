@@ -1,0 +1,36 @@
+package com.example.univTime.univTime.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
+import com.example.univTime.univTime.domain.User;
+import com.example.univTime.univTime.repository.UserRepository;
+import java.util.Optional;
+
+@Service
+public class UserService {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public boolean registerUser(String username, String password) {
+        Optional<User> existingUser = userRepository.findByUsername(username);
+        if (existingUser.isPresent()) {
+            return false; // 회원가입 실패 (이미 존재하는 아이디)
+        }
+        User newUser = new User();
+        newUser.setUsername(username);
+        newUser.setPassword(passwordEncoder.encode(password));
+        userRepository.save(newUser);
+        return true; // 회원가입 성공
+    }
+
+    public boolean loginUser(String username, String password) {
+        Optional<User> user = userRepository.findByUsername(username);
+        return user.isPresent() && passwordEncoder.matches(password, user.get().getPassword());
+    }
+}
