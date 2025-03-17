@@ -1,66 +1,84 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>커뮤니티 플랫폼 - 추천/비추천 기능 추가 예제</title>
-  <!-- Google Fonts 적용 -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>로그인</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+
+  <style>
+    .gradient-custom {
+      background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+    }
+  </style>
 </head>
-<body>
-  <div class="container">
-    <!-- 헤더 영역 -->
-    <div class="header">
-      <div class="logo">커뮤니티 로고</div>
-    </div>
-    
-    <!-- 사이드바: 로그인/회원가입 및 게시판 목록 -->
-    <div class="sidebar">
-      <div id="userArea">
-        <!-- 로그인/회원가입 UI가 이곳에 표시됩니다. -->
-      </div>
-      <ul class="board-list">
-        <li data-board="자유게시판">자유게시판</li>
-        <li data-board="공지사항">공지사항</li>
-        <li data-board="Q&A">Q&amp;A</li>
-        <li data-board="정보공유">정보공유</li>
-      </ul>
-    </div>
-    
-    <!-- 메인 영역 -->
-    <div class="main">
-      <div class="main-header">
-        <h2 id="boardTitle">자유게시판</h2>
-        <button id="writeBtn">글쓰기</button>
-      </div>
-      <!-- 검색 영역 (옵션) -->
-      <div class="search-container" style="margin-bottom:20px;">
-        <input type="text" placeholder="게시글 검색">
-        <button type="button">검색</button>
-      </div>
-      <div id="postListView">
-        <div th:each="post : ${posts}">
-          <a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}"></a>
-          <p th:text="${#temporals.format(post.created_at, 'yyyy-MM-dd')}"></p>
-          <hr>
+<body class="gradient-custom">
+<section class="d-flex vh-100">
+  <div class="container-fluid row justify-content-center align-content-center">
+    <div class="card bg-dark" style="border-radius: 1rem;">
+      <div class="card-body p-5 text-center">
+        <h2 class="text-white">LOGIN</h2>
+        <p class="text-white-50 mt-2 mb-5">서비스를 사용하려면 로그인을 해주세요!</p>
+
+        <div class = "mb-2">
+          <form action="/login" method="POST">
+            <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
+            <div class="mb-3">
+              <label class="form-label text-white">Email address</label>
+              <input type="email" class="form-control" name="username">
+            </div>
+            <div class="mb-3">
+              <label class="form-label text-white">Password</label>
+              <input type="password" class="form-control" name="password">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
         </div>
       </div>
     </div>
   </div>
-      
-      <!-- 게시글 상세보기 영역 (초기엔 숨김) -->
-      <div id="postDetailView"></div>
-    </div>
-    
-    <!-- 우측 영역: 인기 게시물 -->
-    <div class="right">
-      <h3>인기 게시물</h3>
-      <ul>
-        <li>인기 게시물 1</li>
-        <li>인기 게시물 2</li>
-        <li>인기 게시물 3</li>
-      </ul>
+</section>
+</body>
+</html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>회원 가입</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+
+  <style>
+    .gradient-custom {
+      background: linear-gradient(to right, rgba(254, 238, 229, 1), rgba(229, 193, 197, 1))
+    }
+  </style>
+</head>
+<body class="gradient-custom">
+<section class="d-flex vh-100">
+  <div class="container-fluid row justify-content-center align-content-center">
+    <div class="card bg-dark" style="border-radius: 1rem;">
+      <div class="card-body p-5 text-center">
+        <h2 class="text-white">SIGN UP</h2>
+        <p class="text-white-50 mt-2 mb-5">서비스 사용을 위한 회원 가입</p>
+
+        <div class = "mb-2">
+          <form th:action="@{/user}" method="POST">
+            <!-- 토큰을 추가하여 CSRF 공격 방지 -->
+            <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
+            <div class="mb-3">
+              <label class="form-label text-white">Email address</label>
+              <input type="email" class="form-control" name="email">
+            </div>
+            <div class="mb-3">
+              <label class="form-label text-white">Password</label>
+              <input type="password" class="form-control" name="password">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
+</section>
 </body>
 </html>
