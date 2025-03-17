@@ -13,29 +13,44 @@
             height: 100vh;
         }
 
+        /* 툴바 스타일 */
+        .toolbar {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+
+        .toolbar button {
+            padding: 5px 10px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #eee;
+        }
+
+        .toolbar button:hover {
+            background-color: #ddd;
+        }
+
         /* 제목 입력란 스타일 */
         #title {
-            width: 650px; /* 너비 줄임 */
-            height: 35px; /* 높이 줄임 */
+            width: 650px;
+            min-height: 35px;
             font-size: 16px;
             padding: 8px;
             border: 2px solid #ccc;
             border-radius: 8px;
             outline: none;
             text-align: center;
-        }
-
-        /* 제목 입력란과 버튼을 한 줄에 배치 */
-        .title-container {
-            display: flex;
-            align-items: center;
-            gap: 10px; /* 제목과 버튼 사이 간격 */
+            background-color: white;
+            cursor: text;
         }
 
         /* 본문 입력란 스타일 */
         #content {
-            width: 650px; /* 너비 줄임 */
-            height: 400px; /* 높이 줄임 */
+            width: 650px;
+            height: 400px;
             font-size: 16px;
             padding: 15px;
             border: 2px solid #ccc;
@@ -66,17 +81,64 @@
     <article>
         <input type="hidden" id="post-id" th:value="${post.id}">
 
-        <!-- 제목 입력란과 등록 버튼을 한 줄에 배치 -->
-        <div class="title-container">
-            <input type="text" id="title" th:value="${post.title}" placeholder="제목을 입력하세요">
-            <button type="button" id="submit-button">등록</button>
+        <!-- 툴바 추가 -->
+        <div class="toolbar">
+            <button onclick="formatText('bold')">B</button>
+            <button onclick="formatText('underline')">U</button>
+            <button onmousedown="startChangingFontSize('increase')" onmouseup="stopChangingFontSize()" onmouseleave="stopChangingFontSize()">A+</button>
+            <button onmousedown="startChangingFontSize('decrease')" onmouseup="stopChangingFontSize()" onmouseleave="stopChangingFontSize()">A-</button>
         </div>
+
+        <!-- 제목 입력란 -->
+        <div id="title" contenteditable="true" placeholder="제목을 입력하세요"></div>
 
         <br>
 
-        <textarea id="content" placeholder="내용을 입력하세요" th:text="${post.content}"></textarea><br>
+        <!-- 본문 입력란 -->
+        <div id="content" contenteditable="true" placeholder="내용을 입력하세요"></div>
+
+        <br>
+        <button type="button" id="submit-button">등록</button>
     </article>
 </div>
-<script src="/js/post.js"></script>
+
+<script>
+    let fontSizeChangeInterval;
+
+    // 텍스트 포맷 적용 함수 (굵게, 밑줄)
+    function formatText(command) {
+        document.execCommand(command, false, null);
+    }
+
+    // 글자 크기 지속적으로 변경하는 함수
+    function startChangingFontSize(action) {
+        changeFontSize(action);
+        fontSizeChangeInterval = setInterval(() => {
+            changeFontSize(action);
+        }, 100); // 0.1초마다 크기 변경
+    }
+
+    // 글자 크기 변경 중단
+    function stopChangingFontSize() {
+        clearInterval(fontSizeChangeInterval);
+    }
+
+    function changeFontSize(action) {
+        let selection = window.getSelection();
+        if (!selection.rangeCount) return;
+
+        let range = selection.getRangeAt(0);
+        let parentElement = range.startContainer.parentElement;
+
+        // 현재 선택된 텍스트의 기본 글자 크기 가져오기
+        let currentSize = parseFloat(window.getComputedStyle(parentElement, null).getPropertyValue('font-size'));
+
+        // 크기 조절
+        let newSize = action === "increase" ? currentSize + 2 : Math.max(8, currentSize - 2); // 최소 크기 8px 제한
+
+        parentElement.style.fontSize = newSize + "px";
+    }
+</script>
+
 </body>
 </html>
